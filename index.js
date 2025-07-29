@@ -1,8 +1,9 @@
-module.exports = (req, res) => {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Only POST method allowed" });
-  }
+const express = require('express');
+const app = express();
 
+app.use(express.json());
+
+app.post('/bfhl', (req, res) => {
   const data = req.body.data;
   const even = [];
   const odd = [];
@@ -33,7 +34,7 @@ module.exports = (req, res) => {
       : reversed[i].toLowerCase();
   }
 
-  return res.status(200).json({
+  res.status(200).json({
     is_success: true,
     user_id: "kritica_jain_09102004",
     email: "kritica523.be22@chitkara.edu.in",
@@ -45,4 +46,9 @@ module.exports = (req, res) => {
     sum: String(sum),
     concat_string: concat
   });
-};
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
